@@ -406,6 +406,7 @@ function formatDuration(mins){
   return m+"m";
 }
 
+let lastCelebratedDayKey = null;
 function toggleTask(idx){
   const key = todayKey();
   const dow = new Date().getDay();
@@ -422,8 +423,12 @@ function toggleTask(idx){
   renderAll(true);
 
   const allDone = rec.completed.every(Boolean) && sched.length > 0;
-  if(allDone && rec.completed[idx]){
+  if(allDone && rec.completed[idx] && lastCelebratedDayKey !== key){
+    lastCelebratedDayKey = key;
     celebrate();
+  }
+  if(!allDone){
+    lastCelebratedDayKey = null; // allow celebrating again if they complete the day a second time
   }
 }
 
@@ -724,30 +729,33 @@ function playSuccessSound(){
 }
 
 let confettiParticles = [];
-let confettiRunning = false;
+let confettiGen = 0;
 function fireConfetti(){
   const canvas = document.getElementById("confetti-canvas");
   const ctx = canvas.getContext("2d");
   canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-  const colors = ["#3D5CFF","#6C4CF1","#12B981","#F5A524","#F15B6C"];
+  const colors = ["#3D5CFF","#6C4CF1","#12B981","#F5A524","#F15B6C","#EC4899","#F7B733"];
+  const myGen = ++confettiGen; // invalidates any older, still-running animation loop
   confettiParticles = [];
-  for(let i=0;i<140;i++){
+  for(let i=0;i<320;i++){
+    // most particles start already spread across the screen (instant burst),
+    // a smaller share start just above the top edge to keep replenishing the fall
+    const startsOnScreen = Math.random() < 0.75;
     confettiParticles.push({
       x: Math.random()*canvas.width,
-      y: -20 - Math.random()*canvas.height*0.3,
-      r: 4 + Math.random()*5,
+      y: startsOnScreen ? Math.random()*canvas.height*0.85 : -20 - Math.random()*canvas.height*0.15,
+      r: 4 + Math.random()*6,
       c: colors[Math.floor(Math.random()*colors.length)],
-      vy: 2 + Math.random()*3,
+      vy: 2.5 + Math.random()*3.5,
       vx: -1.5 + Math.random()*3,
       rot: Math.random()*360,
       vr: -6 + Math.random()*12,
       shape: Math.random() > 0.5 ? "rect" : "circle"
     });
   }
-  confettiRunning = true;
   let start = performance.now();
   function frame(t){
-    if(!confettiRunning) return;
+    if(myGen !== confettiGen) return; // a newer celebration took over — stop quietly
     ctx.clearRect(0,0,canvas.width,canvas.height);
     confettiParticles.forEach(p=>{
       p.x += p.vx; p.y += p.vy; p.rot += p.vr;
@@ -761,8 +769,7 @@ function fireConfetti(){
     });
     if(t - start < 3400){
       requestAnimationFrame(frame);
-    }else{
-      confettiRunning = false;
+    }else if(myGen === confettiGen){
       ctx.clearRect(0,0,canvas.width,canvas.height);
     }
   }
