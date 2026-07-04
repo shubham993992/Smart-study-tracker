@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Shubham Routine During Home — Study Planner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+<div class="orb orb4"></div>
+<canvas id="confetti-canvas"></canvas>
+
+<div class="loading-screen" id="loadingScreen">
+  <div class="loading-spinner"></div>
+  <div class="loading-text" id="loadingText">Checking your session…</div>
+</div>
+
+<div class="auth-overlay hidden" id="authOverlay">
+  <div class="auth-box glass">
+    <div class="auth-logo">📅 Study Planner</div>
+    <div class="auth-tabs">
+      <button type="button" class="auth-tab active" id="tabLoginBtn">Login</button>
+      <button type="button" class="auth-tab" id="tabRegisterBtn">Register</button>
+    </div>
+    <form id="loginForm" class="auth-form">
+      <input type="email" id="loginEmail" placeholder="Email" required autocomplete="email">
+      <input type="password" id="loginPassword" placeholder="Password" required autocomplete="current-password">
+      <button type="submit" class="auth-submit" id="loginSubmitBtn">Login</button>
+    </form>
+    <form id="registerForm" class="auth-form hidden">
+      <input type="text" id="regName" placeholder="Your Name" required autocomplete="name">
+      <input type="email" id="regEmail" placeholder="Email" required autocomplete="email">
+      <input type="password" id="regPassword" placeholder="Password (min 6 characters)" required autocomplete="new-password" minlength="6">
+      <button type="submit" class="auth-submit" id="registerSubmitBtn">Create Account</button>
+    </form>
+    <div class="auth-error" id="authError"></div>
+  </div>
+</div>
+
+<div id="appShell" class="hidden">
+<header class="top">
+  <div class="wrap">
+    <div class="header-inner">
+      <div class="brand">
+        <h1>📅 My Study Routine</h1>
+        <div class="sub">Your personal study command center</div>
+      </div>
+      <div class="time-block glass">
+        <div class="day-date">
+          <span class="day" id="liveDay">—</span>
+          <span class="date" id="liveDate">—</span>
+        </div>
+        <div class="clock" id="liveClock">00:00:00</div>
+      </div>
+      <div class="user-badge glass" id="userBadge">
+        <div class="user-avatar" id="userAvatar">?</div>
+        <div class="user-info">
+          <span class="user-name" id="userNameLabel">—</span>
+          <button type="button" class="logout-btn" id="logoutBtn">Logout</button>
+        </div>
+      </div>
+    </div>
+    <div class="greeting-bar glass">
+      <span class="emoji" id="greetEmoji">🌅</span>
+      <div class="txt">
+        <span id="greetText">Good Morning</span><span class="greet-name" id="greetName">there</span>
+        <span id="greetSub">Let's make today count.</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO: RING + QUOTE -->
+  <section class="hero-row">
+    <div class="ring-card glass">
+      <h3>Today's Progress</h3>
+      <div class="ring-wrap">
+        <svg viewBox="0 0 200 200">
+          <defs>
+            <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#3D5CFF"/>
+              <stop offset="55%" stop-color="#6C4CF1"/>
+              <stop offset="100%" stop-color="#12B981"/>
+            </linearGradient>
+          </defs>
+          <circle class="ring-bg" cx="100" cy="100" r="86"></circle>
+          <circle class="ring-fg" id="ringFg" cx="100" cy="100" r="86" stroke-dasharray="540.35" stroke-dashoffset="540.35"></circle>
+        </svg>
+        <div class="ring-center">
+          <div class="pct" id="ringPct">0%</div>
+          <div class="lbl" id="ringLbl">0 / 0 tasks</div>
+        </div>
+      </div>
+      <div class="ring-foot" id="ringFoot">Complete today's tasks to fill the ring</div>
+    </div>
+
+    <div class="quote-card glass">
+      <div class="mark">"</div>
+      <p id="quoteText">Loading today's motivation…</p>
+      <div class="quote-foot">
+        <span class="quote-tag">Daily Motivation</span>
+        <button class="btn-refresh" id="refreshQuoteBtn">🔄 New Quote</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- TODAY'S SCHEDULE -->
+  <section>
+    <div class="section-title">
+      <h2>🗓️ <span id="scheduleTitle">Today's Schedule</span></h2>
+      <span class="hint" id="scheduleHint"></span>
+    </div>
+    <div class="task-grid" id="taskGrid"></div>
+  </section>
+
+  <!-- ROUTINE BUILDER -->
+  <section>
+    <div class="section-title">
+      <h2>🛠️ Build Your Routine</h2>
+      <button type="button" class="btn-refresh" id="toggleRoutineBtn">✏️ Edit Routine</button>
+    </div>
+    <div class="routine-card glass hidden" id="routineEditorBox">
+      <span class="hint">Add, edit or remove tasks for any day — saved to your account automatically</span>
+      <div class="day-tabs" id="dayTabs"></div>
+      <div class="routine-task-list" id="routineTaskList"></div>
+      <div class="routine-actions">
+        <button type="button" class="btn-refresh" id="resetDayBtn">↺ Reset This Day to Default</button>
+        <button type="button" class="btn-refresh" id="resetAllBtn">↺ Reset All Days to Default</button>
+      </div>
+      <form id="addTaskForm" class="add-task-form">
+        <input type="text" id="taskTime" placeholder="Time e.g. 09:00 - 10:00" required>
+        <input type="text" id="taskSubject" placeholder="Subject / Task name" required>
+        <input type="number" id="taskDuration" placeholder="Duration (mins)" min="1" required>
+        <select id="taskType">
+          <option value="lecture">Lecture</option>
+          <option value="practice">Practice</option>
+          <option value="notes">Notes</option>
+          <option value="revision">Revision</option>
+          <option value="skill">Skill</option>
+          <option value="current-affairs">Current Affairs</option>
+          <option value="break">Break</option>
+        </select>
+        <input type="text" id="taskIcon" placeholder="Emoji (optional)" maxlength="4">
+        <button type="submit" class="auth-submit">+ Add Task</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- MOCK MARKS TRACKER -->
+  <section>
+    <div class="section-title">
+      <h2>🎯 Mock Test Marks</h2>
+      <span class="hint">Add scores per subject — get instant guidance on where to focus</span>
+    </div>
+    <div class="marks-card glass">
+      <form id="addMarksForm" class="add-marks-form">
+        <div class="field-group fg-subject">
+          <label for="marksSubject">📚 Subject</label>
+          <input type="text" id="marksSubject" placeholder="e.g. Maths" required list="subjectList" autocomplete="off">
+          <datalist id="subjectList"></datalist>
+        </div>
+        <div class="field-group">
+          <label for="marksObtained">✅ Marks Obtained</label>
+          <input type="number" id="marksObtained" placeholder="68" min="0" required>
+        </div>
+        <span class="fg-slash">/</span>
+        <div class="field-group">
+          <label for="marksTotal">💯 Total Marks</label>
+          <input type="number" id="marksTotal" placeholder="100" min="1" required>
+        </div>
+        <div class="field-group">
+          <label for="marksDate">📅 Date</label>
+          <input type="date" id="marksDate">
+        </div>
+        <button type="submit" class="auth-submit marks-submit">＋ Add Score</button>
+      </form>
+      <div class="subject-summary-grid" id="subjectSummaryGrid"></div>
+      <div class="marks-list" id="marksList"></div>
+    </div>
+  </section>
+
+  <!-- ANALYTICS -->
+  <section>
+    <div class="section-title">
+      <h2>📊 Analytics</h2>
+      <span class="hint">Updates automatically as you check off tasks</span>
+    </div>
+    <div class="analytics-grid" id="analyticsGrid"></div>
+  </section>
+
+  <!-- WEEKLY PROGRESS -->
+  <section>
+    <div class="section-title"><h2>📈 Weekly Progress</h2></div>
+    <div class="weekly-card glass" id="weeklyCard"></div>
+  </section>
+
+  <!-- HEATMAP + GAUGE -->
+  <section class="hero-row">
+    <div class="gauge-card glass">
+      <h3 style="font-size:14px;font-weight:600;color:var(--text-soft);letter-spacing:.02em;text-transform:uppercase;">Productivity Score</h3>
+      <div class="gauge-wrap">
+        <svg viewBox="0 0 240 140" width="240" height="140">
+          <defs>
+            <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#F15B6C"/>
+              <stop offset="40%" stop-color="#F5A524"/>
+              <stop offset="70%" stop-color="#3D5CFF"/>
+              <stop offset="100%" stop-color="#12B981"/>
+            </linearGradient>
+          </defs>
+          <path d="M 20 120 A 100 100 0 0 1 220 120" fill="none" stroke="#E9ECF3" stroke-width="18" stroke-linecap="round"/>
+          <path id="gaugeArc" d="M 20 120 A 100 100 0 0 1 220 120" fill="none" stroke="url(#gaugeGrad)" stroke-width="18" stroke-linecap="round"
+                stroke-dasharray="314" stroke-dashoffset="314"/>
+        </svg>
+        <div class="gauge-center">
+          <div class="gval" id="gaugeVal">0%</div>
+          <div class="glabel" id="gaugeLabel">Needs Improvement</div>
+        </div>
+      </div>
+      <div class="gauge-advice" id="gaugeAdvice">Complete a few days to see your guidance here.</div>
+    </div>
+
+    <div class="heatmap-card glass">
+      <div class="heatmap-head">
+        <h4 id="heatmapMonth">Monthly Heatmap</h4>
+        <div class="legend">
+          <span><span class="dot g"></span>Completed</span>
+          <span><span class="dot y"></span>Partial</span>
+          <span><span class="dot n"></span>Missed</span>
+        </div>
+      </div>
+      <div class="heat-grid" id="heatDow"></div>
+      <div class="heat-grid" id="heatGrid" style="margin-top:6px;"></div>
+    </div>
+  </section>
+
+  <!-- BADGES -->
+  <section>
+    <div class="section-title"><h2>🏅 Achievement Badges</h2></div>
+    <div class="badge-grid" id="badgeGrid"></div>
+  </section>
+
+</main>
+
+<footer>
+  Designed with ❤️ by <b>Shubham Kumar</b> · © <span id="footYear"></span>
+</footer>
+</div><!-- /#appShell -->
+
+<div class="modal-overlay" id="celebrateModal">
+  <div class="modal-box">
+    <div class="big-emoji">🎉</div>
+    <h3>Excellent Work Shubham!</h3>
+    <p>You completed every task on today's routine. Keep the streak alive!</p>
+    <button id="closeModalBtn">Continue</button>
+  </div>
+</div>
+
+<script type="module" src="script.js"></script>
+</body>
+</html>
