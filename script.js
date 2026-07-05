@@ -1094,10 +1094,12 @@ if(firebaseReady){
       showLoading(true, "Loading your planner…");
       showAuthOverlay(false);
       try{
-        await loadUserProfile(user.uid, user.displayName);
-        await loadRoutine(user.uid);
-        await loadRecentDays(user.uid);
-        await loadMarks(user.uid);
+        await Promise.all([
+          loadUserProfile(user.uid, user.displayName),
+          loadRoutine(user.uid),
+          loadRecentDays(user.uid),
+          loadMarks(user.uid)
+        ]);
         applyUserBranding();
         document.getElementById("userBadge").style.display = "flex";
         showAppShell(true);
@@ -1134,3 +1136,51 @@ window.addEventListener("resize", ()=>{
   const canvas = document.getElementById("confetti-canvas");
   canvas.width = window.innerWidth; canvas.height = window.innerHeight;
 });
+
+/* ============================================================
+   LOGIN SCREEN BUBBLES — fully JS-driven (no dependency on CSS
+   animations loading correctly, and unaffected by OS-level
+   "reduce motion" CSS overrides since we set transform directly)
+============================================================ */
+(function initBubbles(){
+  const bubbles = document.querySelectorAll(".bubble");
+  if(!bubbles.length) return;
+
+  const specs = Array.from(bubbles).map(el=>{
+    const size = parseFloat(el.dataset.size) || 24;
+    const color = el.dataset.color || "#3D5CFF";
+    el.style.left = (el.dataset.left || 50) + "%";
+    el.style.width = size + "px";
+    el.style.height = size + "px";
+    el.style.background = `radial-gradient(circle at 32% 28%, rgba(255,255,255,0.9), ${color} 55%, ${color} 100%)`;
+    el.style.boxShadow = `0 0 18px ${color}`;
+    el.style.willChange = "transform, opacity";
+    return {
+      el,
+      duration: parseFloat(el.dataset.duration) || 14,
+      delay: parseFloat(el.dataset.delay) || 0,
+      drift: -20 + Math.random()*40
+    };
+  });
+
+  const start = performance.now();
+  function frame(t){
+    const elapsed = (t - start) / 1000;
+    const riseDistance = window.innerHeight + 200;
+    specs.forEach(s=>{
+      let phase = ((elapsed - s.delay) % s.duration) / s.duration;
+      if(phase < 0) phase += 1;
+      const y = -phase * riseDistance;
+      const x = Math.sin(phase * Math.PI * 2) * s.drift;
+      const scale = 0.85 + Math.sin(phase * Math.PI) * 0.25;
+      let opacity;
+      if(phase < 0.1) opacity = (phase/0.1) * 0.6;
+      else if(phase > 0.88) opacity = ((1-phase)/0.12) * 0.6;
+      else opacity = 0.6;
+      s.el.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+      s.el.style.opacity = opacity;
+    });
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
