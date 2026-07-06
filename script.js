@@ -882,16 +882,16 @@ document.getElementById("addTaskForm").addEventListener("submit", (e)=>{
   afterRoutineChange();
 });
 
-document.getElementById("resetDayBtn").addEventListener("click", ()=>{
-  userRoutine[String(selectedBuilderDow)] = JSON.parse(JSON.stringify(defaultScheduleForDow(selectedBuilderDow)));
-  afterRoutineChange();
-});
+// document.getElementById("resetDayBtn").addEventListener("click", ()=>{
+//   userRoutine[String(selectedBuilderDow)] = JSON.parse(JSON.stringify(defaultScheduleForDow(selectedBuilderDow)));
+//   afterRoutineChange();
+// });
 
-document.getElementById("resetAllBtn").addEventListener("click", ()=>{
-  if(!confirm("Reset every day's routine back to the default? This replaces all your custom tasks.")) return;
-  userRoutine = seedDefaultRoutine();
-  afterRoutineChange();
-});
+// document.getElementById("resetAllBtn").addEventListener("click", ()=>{
+//   if(!confirm("Reset every day's routine back to the default? This replaces all your custom tasks.")) return;
+//   userRoutine = seedDefaultRoutine();
+//   afterRoutineChange();
+// });
 
 document.getElementById("toggleRoutineBtn").addEventListener("click", ()=>{
   const box = document.getElementById("routineEditorBox");

@@ -330,8 +330,47 @@ main{ padding-top: 26px; display:flex; flex-direction:column; gap: 40px; }
 /* ============================================================
    FOOTER
 ============================================================ */
-footer{ text-align:center; padding:34px 0 10px; color: var(--text-faint); font-size:13px; font-weight:500; }
-footer b{ color: var(--text-soft); }
+.site-footer{
+  padding:26px 0 30px;
+  margin-top: 20px;
+  position: relative;
+}
+.site-footer::before{
+  content:"";
+  position:absolute; top:0; left:50%; transform:translateX(-50%);
+  width:90%; max-width:1240px; height:1px;
+  background: linear-gradient(90deg, transparent, rgba(61,92,255,0.25), transparent);
+}
+.footer-inner{
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px;
+  max-width:1240px; margin:0 auto; padding:0 28px;
+}
+.footer-credit{ display:flex; flex-direction:column; gap:4px; }
+.footer-made-by{ font-size:13px; font-weight:700; color: var(--text); }
+.footer-about{ font-size:12px; color: var(--text-soft); max-width:420px; line-height:1.5; }
+.footer-copyright{ font-size:11px; color: var(--text-faint); }
+.footer-links{ display:flex; gap:10px; }
+.footer-icon{
+  width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  background: rgba(61,92,255,0.08); color: var(--primary); transition: all .2s ease;
+}
+.footer-icon i{ font-size:16px; }
+.footer-icon:hover{ transform: translateY(-3px); color:#fff; }
+
+.icon-email{ background: rgba(234,67,53,0.10); color:#EA4335; }
+.icon-email:hover{ background: linear-gradient(135deg, #EA4335, #F5A524); }
+
+.icon-instagram{ background: rgba(221,42,123,0.10); color:#DD2A7B; }
+.icon-instagram:hover{ background: linear-gradient(135deg, #F58529, #DD2A7B, #8134AF, #515BD4); }
+
+.icon-github{ background: rgba(24,23,23,0.08); color:#181717; }
+.icon-github:hover{ background:#181717; }
+
+.icon-linkedin{ background: rgba(10,102,194,0.10); color:#0A66C2; }
+.icon-linkedin:hover{ background:#0A66C2; }
+.icon-telegram{ background: rgba(38,165,228,0.10); color:#26A5E4; }
+.icon-telegram:hover{ background:#26A5E4; }
+@media (max-width: 480px){ .footer-inner{ justify-content:center; text-align:center; } }
 
 /* ============================================================
    CELEBRATION / MODAL
@@ -486,7 +525,7 @@ canvas#confetti-canvas{ position:fixed; inset:0; pointer-events:none; z-index:30
   width:24px; height:24px; border-radius:50%; transition: background .2s ease;
 }
 .rt-delete:hover{ background: rgba(241,91,108,0.14); }
-.routine-actions{ display:flex; justify-content:flex-end; gap:10px; flex-wrap:wrap; }
+/* .routine-actions{ display:flex; justify-content:flex-end; gap:10px; flex-wrap:wrap; } */
 .add-task-form{
   display:grid; grid-template-columns: 1.3fr 1.6fr 0.9fr 1.1fr 0.7fr auto; gap:10px; align-items:center;
   padding-top:14px; border-top:1px dashed rgba(61,92,255,0.18);

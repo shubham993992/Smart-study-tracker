@@ -1,345 +1,400 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Shubham Routine During Home — Study Planner</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shubham Routine During Home — Study Planner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div class="orb orb1"></div>
-<div class="orb orb2"></div>
-<div class="orb orb3"></div>
-<div class="orb orb4"></div>
-<canvas id="confetti-canvas"></canvas>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="orb orb4"></div>
+  <canvas id="confetti-canvas"></canvas>
 
-<div class="loading-screen" id="loadingScreen">
-  <div class="loading-spinner"></div>
-  <div class="loading-text" id="loadingText">Checking your session…</div>
-</div>
-
-<div class="auth-overlay hidden" id="authOverlay">
-  <div class="auth-bg-decor" aria-hidden="true">
-    <span class="bubble" data-left="5"  data-size="26" data-color="#3D5CFF" data-duration="14" data-delay="0"></span>
-    <span class="bubble" data-left="14" data-size="50" data-color="#12B981" data-duration="19" data-delay="2"></span>
-    <span class="bubble" data-left="22" data-size="16" data-color="#F5A524" data-duration="11" data-delay="1"></span>
-    <span class="bubble" data-left="30" data-size="34" data-color="#EC4899" data-duration="16" data-delay="4"></span>
-    <span class="bubble" data-left="40" data-size="20" data-color="#8B5CF6" data-duration="13" data-delay="0.5"></span>
-    <span class="bubble" data-left="50" data-size="60" data-color="#3D5CFF" data-duration="21" data-delay="3"></span>
-    <span class="bubble" data-left="58" data-size="14" data-color="#F15B6C" data-duration="10" data-delay="2.5"></span>
-    <span class="bubble" data-left="66" data-size="40" data-color="#12B981" data-duration="18" data-delay="1.5"></span>
-    <span class="bubble" data-left="74" data-size="28" data-color="#F7B733" data-duration="15" data-delay="5"></span>
-    <span class="bubble" data-left="82" data-size="18" data-color="#8B5CF6" data-duration="12" data-delay="0.8"></span>
-    <span class="bubble" data-left="88" data-size="52" data-color="#3D5CFF" data-duration="20" data-delay="3.5"></span>
-    <span class="bubble" data-left="94" data-size="22" data-color="#EC4899" data-duration="14" data-delay="1.8"></span>
-    <span class="bubble" data-left="10" data-size="38" data-color="#F5A524" data-duration="17" data-delay="6"></span>
-    <span class="bubble" data-left="78" data-size="32" data-color="#12B981" data-duration="16" data-delay="4.5"></span>
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-spinner"></div>
+    <div class="loading-text" id="loadingText">Checking your session…</div>
   </div>
-  <div class="auth-panel">
-    <div class="auth-illustration">
-      <svg viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="deskGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#3D5CFF"/>
-            <stop offset="100%" stop-color="#8B5CF6"/>
-          </linearGradient>
-          <linearGradient id="bookGrad1" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stop-color="#F5A524"/>
-            <stop offset="100%" stop-color="#F15B6C"/>
-          </linearGradient>
-        </defs>
-        <circle cx="160" cy="150" r="130" fill="url(#deskGrad)" opacity="0.08"/>
-        <!-- desk -->
-        <rect x="40" y="230" width="240" height="14" rx="7" fill="#3D5CFF" opacity="0.18"/>
-        <!-- book stack -->
-        <rect x="95" y="196" width="120" height="18" rx="4" fill="url(#bookGrad1)"/>
-        <rect x="102" y="176" width="106" height="18" rx="4" fill="#12B981"/>
-        <rect x="110" y="156" width="90" height="18" rx="4" fill="#3D5CFF"/>
-        <!-- open book on top -->
-        <path d="M112 150 L158 138 L158 118 L112 130 Z" fill="#fff" stroke="#8B5CF6" stroke-width="2"/>
-        <path d="M204 150 L158 138 L158 118 L204 130 Z" fill="#fff" stroke="#8B5CF6" stroke-width="2"/>
-        <line x1="120" y1="140" x2="150" y2="132" stroke="#C7CEFB" stroke-width="2"/>
-        <line x1="122" y1="146" x2="150" y2="138" stroke="#C7CEFB" stroke-width="2"/>
-        <line x1="166" y1="132" x2="196" y2="140" stroke="#C7CEFB" stroke-width="2"/>
-        <line x1="166" y1="138" x2="194" y2="146" stroke="#C7CEFB" stroke-width="2"/>
-        <!-- graduation cap -->
-        <g transform="translate(212,70)">
-          <polygon points="0,10 34,0 68,10 34,20" fill="#1E2340"/>
-          <rect x="30" y="18" width="8" height="16" rx="2" fill="#1E2340"/>
-          <circle cx="60" cy="16" r="3.5" fill="#F5A524"/>
-          <line x1="60" y1="16" x2="60" y2="30" stroke="#F5A524" stroke-width="2"/>
-        </g>
-        <!-- pencil -->
-        <g transform="translate(38,84) rotate(-25)">
-          <rect x="0" y="0" width="70" height="14" rx="4" fill="#F7B733"/>
-          <polygon points="70,0 86,7 70,14" fill="#E8A63C"/>
-          <rect x="0" y="0" width="10" height="14" rx="3" fill="#F15B6C"/>
-        </g>
-        <!-- plant -->
-        <g transform="translate(238,178)">
-          <rect x="0" y="20" width="30" height="26" rx="4" fill="#8B5CF6" opacity="0.85"/>
-          <path d="M15 20 C15 2 2 -6 2 -6 C2 -6 6 8 15 20 Z" fill="#12B981"/>
-          <path d="M15 20 C15 0 28 -8 28 -8 C28 -8 24 8 15 20 Z" fill="#2FD08D"/>
-        </g>
-        <!-- sparkles -->
-        <g fill="#F5A524">
-          <circle cx="60" cy="60" r="3"/>
-          <circle cx="270" cy="120" r="2.5"/>
-          <circle cx="48" cy="200" r="2.5"/>
-        </g>
-      </svg>
-      <div class="auth-illustration-text">
-        <h3>Plan. Study. Grow.</h3>
-        <p>Build your own routine, track daily progress, and watch your consistency compound over time.</p>
-      </div>
-    </div>
-    <div class="auth-box glass">
-      <div class="auth-logo">📅 Study Planner</div>
-      <div class="auth-tabs">
-        <button type="button" class="auth-tab active" id="tabLoginBtn">Login</button>
-        <button type="button" class="auth-tab" id="tabRegisterBtn">Register</button>
-      </div>
-      <form id="loginForm" class="auth-form">
-        <input type="email" id="loginEmail" placeholder="Email" required autocomplete="email">
-        <input type="password" id="loginPassword" placeholder="Password" required autocomplete="current-password">
-        <button type="submit" class="auth-submit" id="loginSubmitBtn">Login</button>
-      </form>
-      <form id="registerForm" class="auth-form hidden">
-        <input type="text" id="regName" placeholder="Your Name" required autocomplete="name">
-        <input type="email" id="regEmail" placeholder="Email" required autocomplete="email">
-        <input type="password" id="regPassword" placeholder="Password (min 6 characters)" required autocomplete="new-password" minlength="6">
-        <button type="submit" class="auth-submit" id="registerSubmitBtn">Create Account</button>
-      </form>
-      <div class="auth-error" id="authError"></div>
-    </div>
-  </div>
-</div>
 
-<div id="appShell" class="hidden">
-<header class="top">
-  <div class="wrap">
-    <div class="header-inner">
-      <div class="brand">
-        <h1>📅 My Study Routine</h1>
-        <div class="sub">Your personal study command center</div>
-      </div>
-      <div class="time-block glass">
-        <div class="day-date">
-          <span class="day" id="liveDay">—</span>
-          <span class="date" id="liveDate">—</span>
-        </div>
-        <div class="clock" id="liveClock">00:00:00</div>
-      </div>
-      <div class="user-badge glass" id="userBadge">
-        <div class="user-avatar" id="userAvatar">?</div>
-        <div class="user-info">
-          <span class="user-name" id="userNameLabel">—</span>
-          <button type="button" class="logout-btn" id="logoutBtn">Logout</button>
-        </div>
-      </div>
+  <div class="auth-overlay hidden" id="authOverlay">
+    <div class="auth-bg-decor" aria-hidden="true">
+      <span class="bubble" data-left="5" data-size="26" data-color="#3D5CFF" data-duration="14" data-delay="0"></span>
+      <span class="bubble" data-left="14" data-size="50" data-color="#12B981" data-duration="19" data-delay="2"></span>
+      <span class="bubble" data-left="22" data-size="16" data-color="#F5A524" data-duration="11" data-delay="1"></span>
+      <span class="bubble" data-left="30" data-size="34" data-color="#EC4899" data-duration="16" data-delay="4"></span>
+      <span class="bubble" data-left="40" data-size="20" data-color="#8B5CF6" data-duration="13"
+        data-delay="0.5"></span>
+      <span class="bubble" data-left="50" data-size="60" data-color="#3D5CFF" data-duration="21" data-delay="3"></span>
+      <span class="bubble" data-left="58" data-size="14" data-color="#F15B6C" data-duration="10"
+        data-delay="2.5"></span>
+      <span class="bubble" data-left="66" data-size="40" data-color="#12B981" data-duration="18"
+        data-delay="1.5"></span>
+      <span class="bubble" data-left="74" data-size="28" data-color="#F7B733" data-duration="15" data-delay="5"></span>
+      <span class="bubble" data-left="82" data-size="18" data-color="#8B5CF6" data-duration="12"
+        data-delay="0.8"></span>
+      <span class="bubble" data-left="88" data-size="52" data-color="#3D5CFF" data-duration="20"
+        data-delay="3.5"></span>
+      <span class="bubble" data-left="94" data-size="22" data-color="#EC4899" data-duration="14"
+        data-delay="1.8"></span>
+      <span class="bubble" data-left="10" data-size="38" data-color="#F5A524" data-duration="17" data-delay="6"></span>
+      <span class="bubble" data-left="78" data-size="32" data-color="#12B981" data-duration="16"
+        data-delay="4.5"></span>
     </div>
-    <div class="greeting-bar glass">
-      <span class="emoji" id="greetEmoji">🌅</span>
-      <div class="txt">
-        <span id="greetText">Good Morning</span><span class="greet-name" id="greetName">there</span>
-        <span id="greetSub">Let's make today count.</span>
-      </div>
-    </div>
-  </div>
-</header>
-
-<main class="wrap">
-
-  <!-- HERO: RING + QUOTE -->
-  <section class="hero-row">
-    <div class="ring-card glass">
-      <h3>Today's Progress</h3>
-      <div class="ring-wrap">
-        <svg viewBox="0 0 200 200">
+    <div class="auth-panel">
+      <div class="auth-illustration">
+        <svg viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#3D5CFF"/>
-              <stop offset="55%" stop-color="#6C4CF1"/>
-              <stop offset="100%" stop-color="#12B981"/>
+            <linearGradient id="deskGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#3D5CFF" />
+              <stop offset="100%" stop-color="#8B5CF6" />
+            </linearGradient>
+            <linearGradient id="bookGrad1" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#F5A524" />
+              <stop offset="100%" stop-color="#F15B6C" />
             </linearGradient>
           </defs>
-          <circle class="ring-bg" cx="100" cy="100" r="86"></circle>
-          <circle class="ring-fg" id="ringFg" cx="100" cy="100" r="86" stroke-dasharray="540.35" stroke-dashoffset="540.35"></circle>
+          <circle cx="160" cy="150" r="130" fill="url(#deskGrad)" opacity="0.08" />
+          <!-- desk -->
+          <rect x="40" y="230" width="240" height="14" rx="7" fill="#3D5CFF" opacity="0.18" />
+          <!-- book stack -->
+          <rect x="95" y="196" width="120" height="18" rx="4" fill="url(#bookGrad1)" />
+          <rect x="102" y="176" width="106" height="18" rx="4" fill="#12B981" />
+          <rect x="110" y="156" width="90" height="18" rx="4" fill="#3D5CFF" />
+          <!-- open book on top -->
+          <path d="M112 150 L158 138 L158 118 L112 130 Z" fill="#fff" stroke="#8B5CF6" stroke-width="2" />
+          <path d="M204 150 L158 138 L158 118 L204 130 Z" fill="#fff" stroke="#8B5CF6" stroke-width="2" />
+          <line x1="120" y1="140" x2="150" y2="132" stroke="#C7CEFB" stroke-width="2" />
+          <line x1="122" y1="146" x2="150" y2="138" stroke="#C7CEFB" stroke-width="2" />
+          <line x1="166" y1="132" x2="196" y2="140" stroke="#C7CEFB" stroke-width="2" />
+          <line x1="166" y1="138" x2="194" y2="146" stroke="#C7CEFB" stroke-width="2" />
+          <!-- graduation cap -->
+          <g transform="translate(212,70)">
+            <polygon points="0,10 34,0 68,10 34,20" fill="#1E2340" />
+            <rect x="30" y="18" width="8" height="16" rx="2" fill="#1E2340" />
+            <circle cx="60" cy="16" r="3.5" fill="#F5A524" />
+            <line x1="60" y1="16" x2="60" y2="30" stroke="#F5A524" stroke-width="2" />
+          </g>
+          <!-- pencil -->
+          <g transform="translate(38,84) rotate(-25)">
+            <rect x="0" y="0" width="70" height="14" rx="4" fill="#F7B733" />
+            <polygon points="70,0 86,7 70,14" fill="#E8A63C" />
+            <rect x="0" y="0" width="10" height="14" rx="3" fill="#F15B6C" />
+          </g>
+          <!-- plant -->
+          <g transform="translate(238,178)">
+            <rect x="0" y="20" width="30" height="26" rx="4" fill="#8B5CF6" opacity="0.85" />
+            <path d="M15 20 C15 2 2 -6 2 -6 C2 -6 6 8 15 20 Z" fill="#12B981" />
+            <path d="M15 20 C15 0 28 -8 28 -8 C28 -8 24 8 15 20 Z" fill="#2FD08D" />
+          </g>
+          <!-- sparkles -->
+          <g fill="#F5A524">
+            <circle cx="60" cy="60" r="3" />
+            <circle cx="270" cy="120" r="2.5" />
+            <circle cx="48" cy="200" r="2.5" />
+          </g>
         </svg>
-        <div class="ring-center">
-          <div class="pct" id="ringPct">0%</div>
-          <div class="lbl" id="ringLbl">0 / 0 tasks</div>
+        <div class="auth-illustration-text">
+          <h3>Plan. Study. Grow.</h3>
+          <p>Build your own routine, track daily progress, and watch your consistency compound over time.</p>
         </div>
       </div>
-      <div class="ring-foot" id="ringFoot">Complete today's tasks to fill the ring</div>
-    </div>
-
-    <div class="quote-card glass">
-      <div class="mark">"</div>
-      <p id="quoteText">Loading today's motivation…</p>
-      <div class="quote-foot">
-        <span class="quote-tag">Daily Motivation</span>
-        <button class="btn-refresh" id="refreshQuoteBtn">🔄 New Quote</button>
+      <div class="auth-box glass">
+        <div class="auth-logo">📅 Study Planner</div>
+        <div class="auth-tabs">
+          <button type="button" class="auth-tab active" id="tabLoginBtn">Login</button>
+          <button type="button" class="auth-tab" id="tabRegisterBtn">Register</button>
+        </div>
+        <form id="loginForm" class="auth-form">
+          <input type="email" id="loginEmail" placeholder="Email" required autocomplete="email">
+          <input type="password" id="loginPassword" placeholder="Password" required autocomplete="current-password">
+          <button type="submit" class="auth-submit" id="loginSubmitBtn">Login</button>
+        </form>
+        <form id="registerForm" class="auth-form hidden">
+          <input type="text" id="regName" placeholder="Your Name" required autocomplete="name">
+          <input type="email" id="regEmail" placeholder="Email" required autocomplete="email">
+          <input type="password" id="regPassword" placeholder="Password (min 6 characters)" required
+            autocomplete="new-password" minlength="6">
+          <button type="submit" class="auth-submit" id="registerSubmitBtn">Create Account</button>
+        </form>
+        <div class="auth-error" id="authError"></div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- TODAY'S SCHEDULE -->
-  <section>
-    <div class="section-title">
-      <h2>🗓️ <span id="scheduleTitle">Today's Schedule</span></h2>
-      <span class="hint" id="scheduleHint"></span>
-    </div>
-    <div class="task-grid" id="taskGrid"></div>
-  </section>
+  <div id="appShell" class="hidden">
+    <header class="top">
+      <div class="wrap">
+        <div class="header-inner">
+          <div class="brand">
+            <h1>📅 My Study Routine</h1>
+            <div class="sub">Your personal study command center</div>
+          </div>
+          <div class="time-block glass">
+            <div class="day-date">
+              <span class="day" id="liveDay">—</span>
+              <span class="date" id="liveDate">—</span>
+            </div>
+            <div class="clock" id="liveClock">00:00:00</div>
+          </div>
+          <div class="user-badge glass" id="userBadge">
+            <div class="user-avatar" id="userAvatar">?</div>
+            <div class="user-info">
+              <span class="user-name" id="userNameLabel">—</span>
+              <button type="button" class="logout-btn" id="logoutBtn">Logout</button>
+            </div>
+          </div>
+        </div>
+        <div class="greeting-bar glass">
+          <span class="emoji" id="greetEmoji">🌅</span>
+          <div class="txt">
+            <span id="greetText">Good Morning</span><span class="greet-name" id="greetName">there</span>
+            <span id="greetSub">Let's make today count.</span>
+          </div>
+        </div>
+      </div>
+    </header>
 
-  <!-- ROUTINE BUILDER -->
-  <section>
-    <div class="section-title">
-      <h2>🛠️ Build Your Routine</h2>
-      <button type="button" class="btn-refresh" id="toggleRoutineBtn">✏️ Edit Routine</button>
-    </div>
-    <div class="routine-card glass hidden" id="routineEditorBox">
-      <span class="hint">Add, edit or remove tasks for any day — saved to your account automatically</span>
-      <div class="day-tabs" id="dayTabs"></div>
-      <div class="routine-task-list" id="routineTaskList"></div>
-      <div class="routine-actions">
+    <main class="wrap">
+
+      <!-- HERO: RING + QUOTE -->
+      <section class="hero-row">
+        <div class="ring-card glass">
+          <h3>Today's Progress</h3>
+          <div class="ring-wrap">
+            <svg viewBox="0 0 200 200">
+              <defs>
+                <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#3D5CFF" />
+                  <stop offset="55%" stop-color="#6C4CF1" />
+                  <stop offset="100%" stop-color="#12B981" />
+                </linearGradient>
+              </defs>
+              <circle class="ring-bg" cx="100" cy="100" r="86"></circle>
+              <circle class="ring-fg" id="ringFg" cx="100" cy="100" r="86" stroke-dasharray="540.35"
+                stroke-dashoffset="540.35"></circle>
+            </svg>
+            <div class="ring-center">
+              <div class="pct" id="ringPct">0%</div>
+              <div class="lbl" id="ringLbl">0 / 0 tasks</div>
+            </div>
+          </div>
+          <div class="ring-foot" id="ringFoot">Complete today's tasks to fill the ring</div>
+        </div>
+
+        <div class="quote-card glass">
+          <div class="mark">"</div>
+          <p id="quoteText">Loading today's motivation…</p>
+          <div class="quote-foot">
+            <span class="quote-tag">Daily Motivation</span>
+            <button class="btn-refresh" id="refreshQuoteBtn">🔄 New Quote</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TODAY'S SCHEDULE -->
+      <section>
+        <div class="section-title">
+          <h2>🗓️ <span id="scheduleTitle">Today's Schedule</span></h2>
+          <span class="hint" id="scheduleHint"></span>
+        </div>
+        <div class="task-grid" id="taskGrid"></div>
+      </section>
+
+      <!-- ROUTINE BUILDER -->
+      <section>
+        <div class="section-title">
+          <h2>🛠️ Build Your Routine</h2>
+          <button type="button" class="btn-refresh" id="toggleRoutineBtn">✏️ Edit Routine</button>
+        </div>
+        <div class="routine-card glass hidden" id="routineEditorBox">
+          <span class="hint">Add, edit or remove tasks for any day — saved to your account automatically</span>
+          <div class="day-tabs" id="dayTabs"></div>
+          <div class="routine-task-list" id="routineTaskList"></div>
+          <!-- <div class="routine-actions">
         <button type="button" class="btn-refresh" id="resetDayBtn">↺ Reset This Day to Default</button>
         <button type="button" class="btn-refresh" id="resetAllBtn">↺ Reset All Days to Default</button>
+      </div> -->
+          <form id="addTaskForm" class="add-task-form">
+            <input type="text" id="taskTime" placeholder="Time e.g. 09:00 - 10:00" required>
+            <input type="text" id="taskSubject" placeholder="Subject / Task name" required>
+            <input type="number" id="taskDuration" placeholder="Duration (mins)" min="1" required>
+            <select id="taskType">
+              <option value="lecture">Lecture</option>
+              <option value="practice">Practice</option>
+              <option value="notes">Notes</option>
+              <option value="revision">Revision</option>
+              <option value="skill">Skill</option>
+              <option value="current-affairs">Current Affairs</option>
+              <option value="break">Break</option>
+            </select>
+            <input type="text" id="taskIcon" placeholder="Emoji (optional)" maxlength="4">
+            <button type="submit" class="auth-submit">+ Add Task</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- MOCK MARKS TRACKER -->
+      <section>
+        <div class="section-title">
+          <h2>🎯 Mock Test Marks</h2>
+          <span class="hint">Add scores per subject — get instant guidance on where to focus</span>
+        </div>
+        <div class="marks-card glass">
+          <form id="addMarksForm" class="add-marks-form">
+            <div class="field-group fg-subject">
+              <label for="marksSubject">📚 Subject</label>
+              <input type="text" id="marksSubject" placeholder="e.g. Maths" required list="subjectList"
+                autocomplete="off">
+              <datalist id="subjectList"></datalist>
+            </div>
+            <div class="field-group">
+              <label for="marksObtained">✅ Marks Obtained</label>
+              <input type="number" id="marksObtained" placeholder="68" min="0" required>
+            </div>
+            <span class="fg-slash">/</span>
+            <div class="field-group">
+              <label for="marksTotal">💯 Total Marks</label>
+              <input type="number" id="marksTotal" placeholder="100" min="1" required>
+            </div>
+            <div class="field-group">
+              <label for="marksDate">📅 Date</label>
+              <input type="date" id="marksDate">
+            </div>
+            <button type="submit" class="auth-submit marks-submit">＋ Add Score</button>
+          </form>
+          <div class="subject-summary-grid" id="subjectSummaryGrid"></div>
+          <div class="marks-list" id="marksList"></div>
+        </div>
+      </section>
+
+      <!-- ANALYTICS -->
+      <section>
+        <div class="section-title">
+          <h2>📊 Analytics</h2>
+          <span class="hint">Updates automatically as you check off tasks</span>
+        </div>
+        <div class="analytics-grid" id="analyticsGrid"></div>
+      </section>
+
+      <!-- WEEKLY PROGRESS -->
+      <section>
+        <div class="section-title">
+          <h2>📈 Weekly Progress</h2>
+        </div>
+        <div class="weekly-card glass" id="weeklyCard"></div>
+      </section>
+
+      <!-- HEATMAP + GAUGE -->
+      <section class="hero-row">
+        <div class="gauge-card glass">
+          <h3
+            style="font-size:14px;font-weight:600;color:var(--text-soft);letter-spacing:.02em;text-transform:uppercase;">
+            Productivity Score</h3>
+          <div class="gauge-wrap">
+            <svg viewBox="0 0 240 140" width="240" height="140">
+              <defs>
+                <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#F15B6C" />
+                  <stop offset="40%" stop-color="#F5A524" />
+                  <stop offset="70%" stop-color="#3D5CFF" />
+                  <stop offset="100%" stop-color="#12B981" />
+                </linearGradient>
+              </defs>
+              <path d="M 20 120 A 100 100 0 0 1 220 120" fill="none" stroke="#E9ECF3" stroke-width="18"
+                stroke-linecap="round" />
+              <path id="gaugeArc" d="M 20 120 A 100 100 0 0 1 220 120" fill="none" stroke="url(#gaugeGrad)"
+                stroke-width="18" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="314" />
+            </svg>
+            <div class="gauge-center">
+              <div class="gval" id="gaugeVal">0%</div>
+              <div class="glabel" id="gaugeLabel">Needs Improvement</div>
+            </div>
+          </div>
+          <div class="gauge-advice" id="gaugeAdvice">Complete a few days to see your guidance here.</div>
+        </div>
+
+        <div class="heatmap-card glass">
+          <div class="heatmap-head">
+            <h4 id="heatmapMonth">Monthly Heatmap</h4>
+            <div class="legend">
+              <span><span class="dot g"></span>Completed</span>
+              <span><span class="dot y"></span>Partial</span>
+              <span><span class="dot n"></span>Missed</span>
+            </div>
+          </div>
+          <div class="heat-grid" id="heatDow"></div>
+          <div class="heat-grid" id="heatGrid" style="margin-top:6px;"></div>
+        </div>
+      </section>
+
+      <!-- BADGES -->
+      <section>
+        <div class="section-title">
+          <h2>🏅 Achievement Badges</h2>
+        </div>
+        <div class="badge-grid" id="badgeGrid"></div>
+      </section>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-credit">
+          <div class="footer-made-by">Made with ❤️ by <b>Shubham Singh Rajput</b></div>
+          <div class="footer-about">
+            Built to help students plan their own study routine, stay consistent, and track real progress — without
+            relying on scattered notebooks or generic templates.
+          </div>
+          <div class="footer-copyright">© <span id="footYear"></span> Study Planner. All rights reserved.</div>
+        </div>
+        <div class="footer-links">
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=shubham776695@gmail.com" class="footer-icon icon-email"
+            title="Email">
+            <i class="fa-solid fa-envelope"></i>
+          </a>
+          <a href="https://www.instagram.com/shubhamrathore0412?igsh=Ym52eG85NXIyNTgz" target="_blank" rel="noopener" class="footer-icon icon-instagram"
+            title="Instagram">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+          <a href="https://github.com/shubham993992" target="_blank" rel="noopener" class="footer-icon icon-github"
+            title="GitHub">
+            <i class="fa-brands fa-github"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/shubhamkumar9939/" target="_blank" rel="noopener"
+            class="footer-icon icon-linkedin" title="LinkedIn">
+            <i class="fa-brands fa-linkedin"></i>
+          </a>
+          <a href="https://t.me/discoverwithshubham" target="_blank" rel="noopener" class="footer-icon icon-telegram"
+            title="Telegram">
+            <i class="fa-brands fa-telegram"></i>
+          </a>
+        </div>
       </div>
-      <form id="addTaskForm" class="add-task-form">
-        <input type="text" id="taskTime" placeholder="Time e.g. 09:00 - 10:00" required>
-        <input type="text" id="taskSubject" placeholder="Subject / Task name" required>
-        <input type="number" id="taskDuration" placeholder="Duration (mins)" min="1" required>
-        <select id="taskType">
-          <option value="lecture">Lecture</option>
-          <option value="practice">Practice</option>
-          <option value="notes">Notes</option>
-          <option value="revision">Revision</option>
-          <option value="skill">Skill</option>
-          <option value="current-affairs">Current Affairs</option>
-          <option value="break">Break</option>
-        </select>
-        <input type="text" id="taskIcon" placeholder="Emoji (optional)" maxlength="4">
-        <button type="submit" class="auth-submit">+ Add Task</button>
-      </form>
+    </footer>
+
+  </div><!-- /#appShell -->
+
+  <div class="modal-overlay" id="celebrateModal">
+    <div class="modal-box">
+      <div class="big-emoji">🎉</div>
+      <h3>Excellent Work Shubham!</h3>
+      <p>You completed every task on today's routine. Keep the streak alive!</p>
+      <button id="closeModalBtn">Continue</button>
     </div>
-  </section>
-
-  <!-- MOCK MARKS TRACKER -->
-  <section>
-    <div class="section-title">
-      <h2>🎯 Mock Test Marks</h2>
-      <span class="hint">Add scores per subject — get instant guidance on where to focus</span>
-    </div>
-    <div class="marks-card glass">
-      <form id="addMarksForm" class="add-marks-form">
-        <div class="field-group fg-subject">
-          <label for="marksSubject">📚 Subject</label>
-          <input type="text" id="marksSubject" placeholder="e.g. Maths" required list="subjectList" autocomplete="off">
-          <datalist id="subjectList"></datalist>
-        </div>
-        <div class="field-group">
-          <label for="marksObtained">✅ Marks Obtained</label>
-          <input type="number" id="marksObtained" placeholder="68" min="0" required>
-        </div>
-        <span class="fg-slash">/</span>
-        <div class="field-group">
-          <label for="marksTotal">💯 Total Marks</label>
-          <input type="number" id="marksTotal" placeholder="100" min="1" required>
-        </div>
-        <div class="field-group">
-          <label for="marksDate">📅 Date</label>
-          <input type="date" id="marksDate">
-        </div>
-        <button type="submit" class="auth-submit marks-submit">＋ Add Score</button>
-      </form>
-      <div class="subject-summary-grid" id="subjectSummaryGrid"></div>
-      <div class="marks-list" id="marksList"></div>
-    </div>
-  </section>
-
-  <!-- ANALYTICS -->
-  <section>
-    <div class="section-title">
-      <h2>📊 Analytics</h2>
-      <span class="hint">Updates automatically as you check off tasks</span>
-    </div>
-    <div class="analytics-grid" id="analyticsGrid"></div>
-  </section>
-
-  <!-- WEEKLY PROGRESS -->
-  <section>
-    <div class="section-title"><h2>📈 Weekly Progress</h2></div>
-    <div class="weekly-card glass" id="weeklyCard"></div>
-  </section>
-
-  <!-- HEATMAP + GAUGE -->
-  <section class="hero-row">
-    <div class="gauge-card glass">
-      <h3 style="font-size:14px;font-weight:600;color:var(--text-soft);letter-spacing:.02em;text-transform:uppercase;">Productivity Score</h3>
-      <div class="gauge-wrap">
-        <svg viewBox="0 0 240 140" width="240" height="140">
-          <defs>
-            <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#F15B6C"/>
-              <stop offset="40%" stop-color="#F5A524"/>
-              <stop offset="70%" stop-color="#3D5CFF"/>
-              <stop offset="100%" stop-color="#12B981"/>
-            </linearGradient>
-          </defs>
-          <path d="M 20 120 A 100 100 0 0 1 220 120" fill="none" stroke="#E9ECF3" stroke-width="18" stroke-linecap="round"/>
-          <path id="gaugeArc" d="M 20 120 A 100 100 0 0 1 220 120" fill="none" stroke="url(#gaugeGrad)" stroke-width="18" stroke-linecap="round"
-                stroke-dasharray="314" stroke-dashoffset="314"/>
-        </svg>
-        <div class="gauge-center">
-          <div class="gval" id="gaugeVal">0%</div>
-          <div class="glabel" id="gaugeLabel">Needs Improvement</div>
-        </div>
-      </div>
-      <div class="gauge-advice" id="gaugeAdvice">Complete a few days to see your guidance here.</div>
-    </div>
-
-    <div class="heatmap-card glass">
-      <div class="heatmap-head">
-        <h4 id="heatmapMonth">Monthly Heatmap</h4>
-        <div class="legend">
-          <span><span class="dot g"></span>Completed</span>
-          <span><span class="dot y"></span>Partial</span>
-          <span><span class="dot n"></span>Missed</span>
-        </div>
-      </div>
-      <div class="heat-grid" id="heatDow"></div>
-      <div class="heat-grid" id="heatGrid" style="margin-top:6px;"></div>
-    </div>
-  </section>
-
-  <!-- BADGES -->
-  <section>
-    <div class="section-title"><h2>🏅 Achievement Badges</h2></div>
-    <div class="badge-grid" id="badgeGrid"></div>
-  </section>
-
-</main>
-
-<footer>
-  Designed with ❤️ by <b>Shubham Kumar</b> · © <span id="footYear"></span>
-</footer>
-</div><!-- /#appShell -->
-
-<div class="modal-overlay" id="celebrateModal">
-  <div class="modal-box">
-    <div class="big-emoji">🎉</div>
-    <h3>Excellent Work Shubham!</h3>
-    <p>You completed every task on today's routine. Keep the streak alive!</p>
-    <button id="closeModalBtn">Continue</button>
   </div>
-</div>
 
-<script type="module" src="script.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
+
 </html>
